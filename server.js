@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "https://naughty-colden-9776b0.netlify.app/",
     credentials: true
 }));
 
@@ -50,6 +50,10 @@ app.get("/userData", (req, res)=>{
 })
 app.use("/", indexRoutes);
 app.use("/users", userRoutes);
+
+app.get("/", (req, res)=> {
+    res.send("hello to BlogAPP Api");
+})
 
 
 app.listen(process.env.PORT || 5000, ()=> {
