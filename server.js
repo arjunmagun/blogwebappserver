@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors({
-    origin: "https://naughty-colden-9776b0.netlify.app/",
+    origin: "https://naughty-colden-9776b0.netlify.app",
     credentials: true
 }));
 
