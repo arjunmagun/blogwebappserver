@@ -14,12 +14,14 @@ const userRoutes = require("./routes/user");
 const Blog = require("./models/blogs");
 const User = require("./models/user");
 
+const developementUri = "http://localhost:3000";
+const productionUri = "https://arjunblogwebproject.netlify.app";
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors({
-    origin: "https://arjunblogwebproject.netlify.app",
+    origin: productionUri,
     credentials: true
 }));
 
@@ -37,25 +39,21 @@ mongoose.connect(process.env.DATABASEURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false
-}).then(()=>console.log("Database is connected"));
+}).then(() => console.log("Database is connected"));
 
 require('./Config/passportConfig')(passport);
 
-app.get("/userData", (req, res)=>{
-    if(!req.user){
+app.get("/userData", (req, res) => {
+    if (!req.user) {
         res.send("Nothing")
-    } else{
+    } else {
         res.send(req.user)
     }
 })
 app.use("/", indexRoutes);
 app.use("/users", userRoutes);
 
-app.get("/", (req, res)=> {
-    res.send("hello to BlogAPP Api");
-})
 
-
-app.listen(process.env.PORT || 5000, ()=> {
+app.listen(process.env.PORT || 5000, () => {
     console.log("server has started");
 });

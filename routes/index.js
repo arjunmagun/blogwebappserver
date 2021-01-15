@@ -1,18 +1,22 @@
 const express = require("express");
 const router = express.Router();
 const Blog = require("../models/blogs");
+const redis = require('redis');
+const REDIS_PORT = process.env.REDIS_PORT || 6379;
+const client = redis.createClient(REDIS_PORT);
 
-router.get("/", (req, res)=>{
-    Blog.find({}, (err, results)=>{
-        if(err){
+router.get("/", (req, res) => {
+    Blog.find({}, (err, results) => {
+        if (err) {
             console.log(err);
-        } else{
-            res.json(results)
+        } else {
+            res.send(results)
         }
     });
 });
 
-router.post("/create", (req, res)=>{
+
+router.post("/create", (req, res) => {
     const title = req.body.title;
     const description = req.body.description;
     const imageUrl = req.body.imageUrl;
@@ -26,42 +30,42 @@ router.post("/create", (req, res)=>{
         createdBy
     });
     newBlog.save()
-        .then(()=> res.json("Added new blog to the database"))
-        .catch((err)=> console.log("Found an error" + err));
+        .then(() => res.json("Added new blog to the database"))
+        .catch((err) => console.log("Found an error" + err));
 });
 
-router.get("/:id", (req, res)=>{
-    Blog.findById(req.params.id, (err, result)=>{
-        if(err){
+router.get("/:id", (req, res) => {
+    Blog.findById(req.params.id, (err, result) => {
+        if (err) {
             res.json(err)
-        } else{
+        } else {
             res.json(result)
         }
     })
 });
 
-router.post("/:id/update", (req, res)=>{
+router.post("/:id/update", (req, res) => {
     const title = req.body.title;
     const description = req.body.description;
     const imageUrl = req.body.imageUrl;
     const date = Date.parse(req.body.date);
-    const editDetails = {title, description, date, imageUrl};
-    Blog.findOneAndUpdate(req.params.id, editDetails, (err, result)=>{
-        if(err){
+    const editDetails = { title, description, date, imageUrl };
+    Blog.findOneAndUpdate(req.params.id, editDetails, (err, result) => {
+        if (err) {
             res.json(err.message)
             console.log(err);
-        }else{
+        } else {
             res.json(result)
         }
     });
 });
 
-router.delete("/:id/update", (req, res)=>{
-    Blog.findOneAndDelete(req.params.id, (err, result)=>{
-        if(err){
+router.delete("/:id/update", (req, res) => {
+    Blog.findOneAndDelete(req.params.id, (err, result) => {
+        if (err) {
             res.json(err.message)
             console.log(err);
-        }else{
+        } else {
             res.send("deleted one blog")
         }
     });
