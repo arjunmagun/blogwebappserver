@@ -1,9 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const Blog = require("../models/blogs");
-const redis = require('redis');
-const REDIS_PORT = process.env.REDIS_PORT || 6379;
-const client = redis.createClient(REDIS_PORT);
 
 router.get("/", (req, res) => {
     Blog.find({}, (err, results) => {
