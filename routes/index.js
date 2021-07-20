@@ -58,7 +58,7 @@ router.post("/:id/update", (req, res) => {
 });
 
 router.delete("/:id/update", (req, res) => {
-    Blog.findOneAndDelete(req.params.id, (err, result) => {
+    Blog.findByIdAndDelete(req.params.id, (err, result) => {
         if (err) {
             res.json(err.message)
             console.log(err);
