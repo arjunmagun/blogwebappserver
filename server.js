@@ -39,7 +39,7 @@ mongoose.connect(process.env.DATABASEURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false
-}).then(() => console.log("Database is connected"));
+}).then(() => console.log("Database is connected and running"));
 
 require('./Config/passportConfig')(passport);
 
