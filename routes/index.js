@@ -47,7 +47,7 @@ router.post("/:id/update", (req, res) => {
     const imageUrl = req.body.imageUrl;
     const date = Date.parse(req.body.date);
     const editDetails = { title, description, date, imageUrl };
-    Blog.findOneAndUpdate(req.params.id, editDetails, (err, result) => {
+    Blog.findByIdAndUpdate(req.params.id, editDetails, (err, result) => {
         if (err) {
             res.json(err.message)
             console.log(err);
